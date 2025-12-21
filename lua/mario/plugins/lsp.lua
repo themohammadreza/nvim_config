@@ -36,10 +36,8 @@ return {
         }
       })
       
-      local lspconfig = require("lspconfig")
-      
       -- Rust
-      lspconfig.rust_analyzer.setup({
+      vim.lsp.config('rust_analyzer', {
         capabilities = capabilities,
         settings = {
           ['rust-analyzer'] = {
@@ -52,9 +50,10 @@ return {
           },
         },
       })
+      vim.lsp.enable('rust_analyzer')
       
       -- Python
-      lspconfig.basedpyright.setup({
+      vim.lsp.config('basedpyright', {
         capabilities = capabilities,
         settings = {
           basedpyright = {
@@ -66,11 +65,13 @@ return {
           },
         },
       })
+      vim.lsp.enable('basedpyright')
       
-      lspconfig.ruff.setup({ capabilities = capabilities })
+      vim.lsp.config('ruff', { capabilities = capabilities })
+      vim.lsp.enable('ruff')
       
       -- Go
-      lspconfig.gopls.setup({
+      vim.lsp.config('gopls', {
         capabilities = capabilities,
         settings = {
           gopls = {
@@ -83,9 +84,10 @@ return {
           },
         },
       })
+      vim.lsp.enable('gopls')
       
       -- C++
-      lspconfig.clangd.setup({
+      vim.lsp.config('clangd', {
         cmd = { 
           "clangd",
           "--background-index",
@@ -100,6 +102,8 @@ return {
           completeUnimported = true,
         },
       })
+      vim.lsp.enable('clangd')
     end,
   },
 }
+
