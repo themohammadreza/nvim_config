@@ -1,4 +1,3 @@
-vim.g.mapleader = "\\"
 
 
 vim.keymap.set('n', '<leader>r', ':w<CR>:terminal cargo run<CR>')
