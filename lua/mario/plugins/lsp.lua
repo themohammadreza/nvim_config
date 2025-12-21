@@ -8,50 +8,98 @@ return {
     },
     config = function()
       local capabilities = require("cmp_nvim_lsp").default_capabilities()
-
-		-- Configure how diagnostics are displayed
+      
       vim.diagnostic.config({
-		  virtual_text = {
-          severity = { min = vim.diagnostic.severity.WARN },  -- Only show warnings and errors
-          source = "if_many",  -- Only show source if multiple sources
-          prefix = "●",  -- Simple prefix instead of full text
-				},
-        signs = true,         -- Show signs in the gutter (left side)
+        virtual_text = {
+          severity = { min = vim.diagnostic.severity.WARN },
+          source = "if_many",
+          prefix = "●",
+        },
+        signs = true,
         update_in_insert = false,
         underline = true,
         severity_sort = true,
         float = {
           border = "rounded",
           source = "always",
-          header = "",
-          prefix = "",
         },
       })
       
       require("mason").setup()
       require("mason-lspconfig").setup({
-        ensure_installed = { "rust_analyzer" }
+        ensure_installed = { 
+          "rust_analyzer",
+          "basedpyright",
+          "ruff",
+          "gopls",
+          "clangd",
+        }
       })
       
-      -- Configure rust-analyzer
-      vim.lsp.config('rust_analyzer', {
+      local lspconfig = require("lspconfig")
+      
+      -- Rust
+      lspconfig.rust_analyzer.setup({
         capabilities = capabilities,
         settings = {
-				['rust-analyzer'] = {
-            check = {
-              command = "clippy",
-            },
+          ['rust-analyzer'] = {
+            check = { command = "clippy" },
             inlayHints = {
-              enable = true,
-              chainingHints = { enable = false },  -- Disable chaining hints
-              parameterHints = { enable = false },  -- Disable parameter hints
-              typeHints = { enable = true },  -- Keep type hints
+              chainingHints = { enable = false },
+              parameterHints = { enable = false },
+              typeHints = { enable = true },
             },
           },
         },
       })
       
-      vim.lsp.enable('rust_analyzer')
+      -- Python
+      lspconfig.basedpyright.setup({
+        capabilities = capabilities,
+        settings = {
+          basedpyright = {
+            analysis = {
+              typeCheckingMode = "standard",
+              autoSearchPaths = true,
+              useLibraryCodeForTypes = true,
+            },
+          },
+        },
+      })
+      
+      lspconfig.ruff.setup({ capabilities = capabilities })
+      
+      -- Go
+      lspconfig.gopls.setup({
+        capabilities = capabilities,
+        settings = {
+          gopls = {
+            analyses = {
+              unusedparams = true,
+              shadow = true,
+            },
+            staticcheck = true,
+            gofumpt = true,
+          },
+        },
+      })
+      
+      -- C++
+      lspconfig.clangd.setup({
+        cmd = { 
+          "clangd",
+          "--background-index",
+          "--clang-tidy",
+          "--header-insertion=iwyu",
+          "--completion-style=detailed",
+          "--function-arg-placeholders",
+        },
+        capabilities = capabilities,
+        init_options = {
+          usePlaceholders = true,
+          completeUnimported = true,
+        },
+      })
     end,
   },
 }
