@@ -72,3 +72,4 @@ return {
         map("n", "<leader>fs", builtin.spell_suggest, opts)
     end
 }
+

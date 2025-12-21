@@ -8,6 +8,8 @@ return {
     },
     config = function()
       local capabilities = require("cmp_nvim_lsp").default_capabilities()
+
+		capabilities.textDocument.semanticTokens = vim.NIL
       
       vim.diagnostic.config({
         virtual_text = {
@@ -55,12 +57,25 @@ return {
       -- Python
       vim.lsp.config('basedpyright', {
         capabilities = capabilities,
+		  before_init = function(_, config)
+    	  -- Get the conda env's Python path
+      local handle = io.popen("which python")
+      local python_path = handle:read("*a"):gsub("%s+", "")
+      handle:close()
+    
+      if python_path and python_path ~= "" then
+        config.settings.python = {
+          pythonPath = python_path
+        }
+      end
+    end,
         settings = {
           basedpyright = {
             analysis = {
               typeCheckingMode = "standard",
               autoSearchPaths = true,
               useLibraryCodeForTypes = true,
+				  diagnosticMode = "workspace",
             },
           },
         },
