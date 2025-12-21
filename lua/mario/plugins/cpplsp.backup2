@@ -1,0 +1,20 @@
+return {
+  {
+    "neovim/nvim-lspconfig",
+    config = function()
+      local lspconfig = require("lspconfig")
+      local capabilities = require("cmp_nvim_lsp").default_capabilities()
+
+      -- Existing servers (e.g., gopls) can stay
+
+      -- 🧠 Add clangd for C/C++
+      lspconfig.clangd.setup({
+        cmd = { "clangd" },
+        filetypes = { "c", "cpp", "objc", "objcpp" },
+        root_dir = lspconfig.util.root_pattern("compile_commands.json", "compile_flags.txt", ".git"),
+        capabilities = capabilities, -- <-- enables nvim-cmp autocompletion
+      })
+    end,
+  },
+}
+
