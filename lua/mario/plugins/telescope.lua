@@ -29,7 +29,14 @@ return {
                         ["<C-j>"] = actions.move_selection_next,
                         ["<C-q>"] = actions.send_selected_to_qflist + actions.open_qflist
                     }
-                }
+                },
+                on_complete = {
+                    function()
+                    vim.schedule(function()
+                        pcall(vim.api.nvim_buf_delete, 0, { force = true })
+                    end)
+                end
+                },
             },
             pickers = {
                 find_files = {
