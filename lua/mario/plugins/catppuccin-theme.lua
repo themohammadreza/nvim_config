@@ -31,7 +31,11 @@ return {
                         CmpBorder = {fg = C.surface2},
                         Pmenu = {bg = C.none},
                         NormalFloat = {bg = C.none},
-                        TelescopeBorder = {link = "FloatBorder"}
+                        TelescopeBorder = {link = "FloatBorder"},
+
+								pythonBuiltin = { link = "Normal" },
+								pythonFunction = { link = "Normal" },
+								pythonDecorator = { link = "Normal" },
                     }
                 end
             },

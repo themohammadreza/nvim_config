@@ -5,7 +5,7 @@ return {
     require("nvim-treesitter.configs").setup({
       ensure_installed = { 
         "lua", 
-        "python", 
+--        "python", 
         "rust",
         "javascript",
         "typescript",
@@ -20,13 +20,13 @@ return {
       
       highlight = {
         enable = true,
-        disable = { "go" },  -- Explicitly disable Go
+        disable = { "go", "python" },  -- Explicitly disable Go
         additional_vim_regex_highlighting = { "go" },  -- Use vim regex for Go instead
       },
       
       indent = {
         enable = true,
-        disable = { "go" },
+        disable = { "go", "python" },
       },
     })
   end,

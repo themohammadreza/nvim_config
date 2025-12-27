@@ -86,20 +86,20 @@ return {
       vim.lsp.enable('ruff')
       
       -- Go
-      vim.lsp.config('gopls', {
-        capabilities = capabilities,
-        settings = {
-          gopls = {
-            analyses = {
-              unusedparams = true,
-              shadow = true,
-            },
-            staticcheck = true,
-            gofumpt = true,
-          },
-        },
-      })
-      vim.lsp.enable('gopls')
+--      vim.lsp.config('gopls', {
+--        capabilities = capabilities,
+--        settings = {
+--          gopls = {
+--            analyses = {
+--              unusedparams = true,
+--              shadow = true,
+--            },
+--            staticcheck = true,
+--            gofumpt = true,
+--          },
+--        },
+--      })
+--      vim.lsp.enable('gopls')
       
       -- C++
       vim.lsp.config('clangd', {

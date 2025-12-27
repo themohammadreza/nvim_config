@@ -38,3 +38,26 @@ vim.api.nvim_create_autocmd("FileType", {
         vim.api.nvim_set_option_value("linebreak", true, {scope = "local"})
     end
 })
+
+-- Disable all semantic token highlighting globally
+vim.api.nvim_create_autocmd("LspAttach", {
+  callback = function(args)
+    local client = vim.lsp.get_client_by_id(args.data.client_id)
+    if client then
+      client.server_capabilities.semanticTokensProvider = nil
+    end
+  end,
+})
+
+
+-- Disable extra Python syntax highlighting
+vim.api.nvim_create_autocmd("FileType", {
+    pattern = {"python"},
+    callback = function()
+        vim.cmd([[
+            syn clear pythonBuiltin
+            syn clear pythonFunction
+            syn clear pythonDecorator
+        ]])
+    end
+})
