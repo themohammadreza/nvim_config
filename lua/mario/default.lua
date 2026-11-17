@@ -63,3 +63,15 @@ vim.api.nvim_create_autocmd("FileType", {
         vim.api.nvim_set_option_value("linebreak", true, {scope = "local"})
     end
 })
+
+-- Disable extra Python syntax highlighting
+vim.api.nvim_create_autocmd("FileType", {
+    pattern = {"python"},
+    callback = function()
+        vim.cmd([[
+            syn clear pythonBuiltin
+            syn clear pythonFunction
+            syn clear pythonDecorator
+        ]])
+    end
+})

@@ -68,7 +68,6 @@ return {
           "lua_ls",
           "bashls",
           "rust_analyzer",
-          "gopls",
           "clangd",
         },
         automatic_enable = false, -- servers are enabled explicitly below
@@ -157,17 +156,17 @@ return {
       })
       vim.lsp.enable("rust_analyzer")
 
-      -- Go
-      vim.lsp.config("gopls", {
-        settings = {
-          gopls = {
-            analyses = { unusedparams = true, shadow = true },
-            staticcheck = true,
-            gofumpt = true,
-          },
-        },
-      })
-      vim.lsp.enable("gopls")
+      -- Go (disabled)
+      -- vim.lsp.config("gopls", {
+      --   settings = {
+      --     gopls = {
+      --       analyses = { unusedparams = true, shadow = true },
+      --       staticcheck = true,
+      --       gofumpt = true,
+      --     },
+      --   },
+      -- })
+      -- vim.lsp.enable("gopls")
 
       -- C/C++
       vim.lsp.config("clangd", {
