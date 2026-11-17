@@ -1,5 +1,7 @@
 return {
   "nvim-treesitter/nvim-treesitter",
+  -- master is the final API that provides `nvim-treesitter.configs`; the `main` rewrite drops it
+  branch = "master",
   build = ":TSUpdate",
   config = function()
     require("nvim-treesitter.configs").setup({
@@ -11,6 +13,17 @@ return {
         "typescript",
         "json",
         "yaml",
+        "tsx",
+        "html",
+        "css",
+        "markdown",
+        "markdown_inline",
+        "toml",
+        "dockerfile",
+        "c",
+        "cpp",
+        "vim",
+        "vimdoc",
         "bash"
         -- Don't include "go" here
       },
