@@ -2,6 +2,8 @@ return {
     "hrsh7th/nvim-cmp",
     dependencies = {
         "hrsh7th/cmp-nvim-lsp", -- cmp_nvim_lsp
+        "hrsh7th/cmp-buffer",
+        "hrsh7th/cmp-path",
         "neovim/nvim-lspconfig", -- lspconfig
         "onsails/lspkind-nvim", -- lspkind (VS pictograms)
         {
@@ -23,10 +25,10 @@ return {
         luasnip.config.setup({
             ext_opts = {
                 [types.choiceNode] = {
-                    active = {virt_text = {{"⇥", "GruvboxRed"}}}
+                    active = {virt_text = {{"⇥", "DiagnosticWarn"}}}
                 },
                 [types.insertNode] = {
-                    active = {virt_text = {{"⇥", "GruvboxBlue"}}}
+                    active = {virt_text = {{"⇥", "DiagnosticInfo"}}}
                 }
             }
         })
@@ -58,10 +60,21 @@ return {
                     else
                         fallback()
                     end
+                end, {"i", "s"}),
+                ["<S-Tab>"] = cmp.mapping(function(fallback)
+                    if cmp.visible() then
+                        cmp.select_prev_item()
+                    elseif luasnip.locally_jumpable(-1) then
+                        luasnip.jump(-1)
+                    else
+                        fallback()
+                    end
                 end, {"i", "s"})
             }),
             sources = cmp.config.sources({
-                {name = "nvim_lsp"}, {name = "luasnip"}, {name = "buffer"}
+                {name = "nvim_lsp"}, {name = "luasnip"}, {name = "path"}
+            }, {
+                {name = "buffer"}
             }),
             formatting = {
                 format = lspkind.cmp_format({
@@ -72,22 +85,5 @@ return {
             }
         })
 
-        --local lspconfig = require("lspconfig")
-
-        -- All languages: https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
-
-        -- Default lspconfig values for Go are set by `navigator`
-        -- Go: go install golang.org/x/tools/gopls@latest
-
-        -- Python: brew install pyright
-        -- lspconfig["pyright"].setup {}
-
-        -- Ruby: gem install solargraph
-        --lspconfig["solargraph"].setup {}
-
-        -- https://phpactor.readthedocs.io/en/master/usage/standalone.html#installation
-        --lspconfig["phpactor"].setup {}
-		vim.lsp.enable('solargraph')
-		vim.lsp.enable('phpactor')
     end
 }
